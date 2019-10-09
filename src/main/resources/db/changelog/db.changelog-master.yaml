@@ -1,0 +1,118 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: sbaginskiy
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: login
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password_hash
+                  type: varchar(255)
+              - column:
+                  name: event_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: room
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: event
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: owner_id
+                  type: bigint
+        - createTable:
+            tableName: event_schedule
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date_from
+                  type: date
+              - column:
+                  name: date_to
+                  type: date
+              - column:
+                  name: time_from
+                  type: time
+              - column:
+                  name: time_to
+                  type: time
+              - column:
+                  name: room_id
+                  type: bigint
+              - column:
+                  name: event_id
+                  type: bigint
+              - column:
+                  name: action_type
+                  type: varchar(6)
+              - column:
+                  name: days
+                  type: varchar(15)
+
+        - addForeignKeyConstraint:
+            baseColumnNames: event_id
+            baseTableName: customer
+            constraintName: fk_customer_event
+            referencedColumnNames: id
+            referencedTableName: event
+        - addForeignKeyConstraint:
+            baseColumnNames: owner_id
+            baseTableName: event
+            constraintName: fk_event_customer
+            referencedColumnNames: id
+            referencedTableName: customer
+        - addForeignKeyConstraint:
+            baseColumnNames: room_id
+            baseTableName: event_schedule
+            constraintName: fk_event_schedule_room
+            referencedColumnNames: id
+            referencedTableName: room
+        - addForeignKeyConstraint:
+            baseColumnNames: event_id
+            baseTableName: event_schedule
+            constraintName: fk_event_schedule_event
+            referencedColumnNames: id
+            referencedTableName: event
