@@ -11,21 +11,21 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Component
-public class EventSchedulePeriodicDto {
+public class EventScheduleDto {
 
     private Room room;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
     @NotNull
-    @DateTimeFormat(pattern = "HH-mm")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH-mm")
     private
     LocalTime timeFrom;
     @NotNull
-    @DateTimeFormat(pattern = "HH-mm")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH-mm")
     private LocalTime timeTo;
 
 }

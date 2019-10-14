@@ -1,9 +1,12 @@
 package jevera.education.booker.domain;
 
-import jevera.education.booker.domain.enums.ActionType;
 import jevera.education.booker.domain.enums.Days;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,9 +21,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-@Data
+
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
+
 @Entity
 @Table(name = "event_schedule")
 public class EventSchedule {
@@ -31,7 +41,6 @@ public class EventSchedule {
     private Long id;
     @Column(name = "date_from")
     private LocalDate dateFrom;
-
     @Column(name = "date_to")
     private LocalDate dateTo;
     @Column(name = "time_from")
@@ -43,10 +52,8 @@ public class EventSchedule {
     private Event event;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "room_id")
-    private Event room;
-    @Column(name = "action_type")
-    @Enumerated(EnumType.STRING)
-    private ActionType actionType;
+    @NotNull
+    private Room room;
     @Column(name = "day")
     @Enumerated(EnumType.STRING)
     private Days day;

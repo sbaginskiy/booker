@@ -86,11 +86,22 @@ databaseChangeLog:
                   name: event_id
                   type: bigint
               - column:
-                  name: action_type
-                  type: varchar(6)
-              - column:
                   name: days
                   type: varchar(15)
+        - createTable:
+            tableName: customer_event
+            columns:
+              - column:
+                  name: event_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: bigint
+                  constraints:
+                    nullable: false
 
         - addForeignKeyConstraint:
             baseColumnNames: event_id
@@ -116,3 +127,15 @@ databaseChangeLog:
             constraintName: fk_event_schedule_event
             referencedColumnNames: id
             referencedTableName: event
+        - addForeignKeyConstraint:
+            baseColumnNames: event_id
+            baseTableName: customer_event
+            constraintName: fk_customer_event_event
+            referencedColumnNames: id
+            referencedTableName: event
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: customer_event
+            constraintName: fk_customer_event_event
+            referencedColumnNames: id
+            referencedTableName: customer
